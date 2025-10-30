@@ -1,12 +1,17 @@
-import React from 'react'
-import Header from '../../components/Landing/Header'
+import React from "react";
+import Header from "../../components/Landing/Header";
+import Hero from "../../components/Landing/Hero";
 
 const LandingPage = () => {
   return (
     <div>
       <Header />
-    </div>
-  )
-}
 
-export default LandingPage
+      <main>
+        <Hero />
+      </main>
+    </div>
+  );
+};
+
+export default LandingPage;
