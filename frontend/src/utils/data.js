@@ -47,3 +47,34 @@ export const TESTIMONIALS = [
     avatar: "https://placehold.co/100x100/000000/ffffff?text=PJ"
   }
 ];
+
+export const FAQS = [
+  {
+    question: "How does the AI invoice creation work?",
+    answer: "Simply paste any text that contains invoice details—like an email, a list of items, or a receipt—and our AI will automatically extract the information and generate a professional invoice for you.",
+  },
+  {
+    question: "Is there a free trial available?",
+    answer: "Yes, you can try our platform for free for 14 days. If you want, we'll provide you with a demo and help you get started.",
+  },
+  {
+    question: "Can I change my plan later?",
+    answer: "Of course. Our pricing scales with your company. Chat to our friendly team to find a solution that works for you.",
+  },
+  {
+    question: "What is your cancellation policy?",
+    answer: "We understand that things change. You can cancel your plan at any time and we'll refund you the difference.",
+  },
+  {
+    question: "Can other info be added to an invoice?",
+    answer: "Yes, you can add notes, payment terms, and even attach files to your invoices.",
+  },
+  {
+    question: "How does billing work?",
+    answer: "Plans are per workspace, not per account. You can upgrade one workspace, and still have any number of free workspaces.",
+  },
+  {
+    question: "How do I change my account email?",
+    answer: "You can change your account email from your profile settings page.",
+  },
+];
