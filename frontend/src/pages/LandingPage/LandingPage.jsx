@@ -3,17 +3,19 @@ import Hero from "../../components/Landing/Hero";
 import Features from "../../components/Landing/Features";
 import Testimonials from "../../components/Landing/Testimonials";
 import Faqs from "../../components/Landing/Faqs";
+import Footer from "../../components/Landing/Footer";
 
 const LandingPage = () => {
   return (
     <div>
       <Header />
 
-      <main className="mb-[100vh]">
+      <main >
         <Hero />
         <Features />
         <Testimonials />
         <Faqs />
+        <Footer />
       </main>
     </div>
   );
