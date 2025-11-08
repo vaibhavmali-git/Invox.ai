@@ -31,14 +31,12 @@ export const registerUser = async (req, res) => {
     const user = await User.create({ name, email, password });
 
     if (user) {
-      res
-        .status(201)
-        .json({
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          token: generateToken(user._id),
-        });
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        token: generateToken(user._id),
+      });
     } else {
       res.status(400).json({ message: "Invalid user data" });
     }
@@ -55,7 +53,25 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Implementation here
+     if ( !email || !password) {
+      return res.status(400).json({ message: "Please provide email and password" });
+    }
+    const user = await User.findOne({ email }).select("+password");
+
+    if (user && (await user.matchPassword(password))) {
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        token: generateToken(user._id),
+
+        businessName: user.businessName || "",
+        address: user.address || "",
+        phone: user.phone || "",
+      });
+    } else {
+        res.status(401).json({ message: "Invalid credentials" });
+    }
   } catch (e) {
     res.status(500).json({ message: "Server Error" });
   }
