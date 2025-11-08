@@ -53,8 +53,10 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-     if ( !email || !password) {
-      return res.status(400).json({ message: "Please provide email and password" });
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Please provide email and password" });
     }
     const user = await User.findOne({ email }).select("+password");
 
@@ -70,7 +72,7 @@ export const loginUser = async (req, res) => {
         phone: user.phone || "",
       });
     } else {
-        res.status(401).json({ message: "Invalid credentials" });
+      res.status(401).json({ message: "Invalid credentials" });
     }
   } catch (e) {
     res.status(500).json({ message: "Server Error" });
@@ -83,7 +85,18 @@ export const loginUser = async (req, res) => {
    */
 export const getMe = async (req, res) => {
   try {
-    // Implementation here
+    const user = await User.findById(req.user.id);
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+
+      businessName: user.businessName || "",
+      address: user.address || "",
+      phone: user.phone || "",
+    });
   } catch (e) {
     res.status(500).json({ message: "Server Error" });
   }
