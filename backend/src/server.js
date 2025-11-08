@@ -3,7 +3,8 @@ import express from "express";
 import cors from "cors";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import {connectDB} from "./config/db.js";
+import { connectDB } from "./config/db.js";
+import authRoutes from "./routes/auth.route.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,10 +22,14 @@ app.use(
 );
 
 /* connect database */
-connectDB()
+connectDB();
+
+/* middleware */
+app.use(express.json());
 
 /* routes */
+app.use("/api/auth", authRoutes);
 
 /* start server */
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
