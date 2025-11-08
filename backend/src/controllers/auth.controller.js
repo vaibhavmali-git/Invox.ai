@@ -108,8 +108,29 @@ export const getMe = async (req, res) => {
    */
 export const updatedUserProfile = async (req, res) => {
   try {
-    // Implementation here
+    const user = await User.findById(req.user.id);
+
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.businessName = req.body.businessName || user.businessName;
+      user.address = req.body.address || user.address;
+      user.phone = req.body.phone || user.phone;
+
+      const updatedUser = await user.save();
+
+      res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        businessName: updatedUser.businessName,
+        address: updatedUser.address,
+        phone: updatedUser.phone
+      })
+    } else{
+        res.status(404).json({ message: "User not found" });
+    }
   } catch (e) {
+     console.error("Update profile error:", e);
     res.status(500).json({ message: "Server Error" });
   }
 };
