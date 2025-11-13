@@ -72,9 +72,12 @@ export const getInvoices = async (req, res) => {
    @access Private */
 export const getInvoiceById = async (req, res) => {
   try {
-    const invoice = await Invoice.findById(req.params.id).populate("user", "name email")
-    if(!invoice) return res.status(404).json({message:"Invoice not found"});
-    res.json(invoice)
+    const invoice = await Invoice.findById(req.params.id).populate(
+      "user",
+      "name email"
+    );
+    if (!invoice) return res.status(404).json({ message: "Invoice not found" });
+    res.json(invoice);
   } catch (e) {
     res
       .status(500)
@@ -87,6 +90,54 @@ export const getInvoiceById = async (req, res) => {
    @access Private */
 export const updateInvoice = async (req, res) => {
   try {
+    const {
+      invoiceNumber,
+      invoiceDate,
+      dueDate,
+      billFrom,
+      billTo,
+      items,
+      notes,
+      paymentTerms,
+      status,
+    } = req.body;
+
+    /* recalculate totals if items changed */
+    let subTotal = 0;
+    let taxTotal = 0;
+
+    if (items && items.length > 0) {
+      items.forEach((item) => {
+        subTotal += item.unitPrice * item.quantity;
+        taxTotal +=
+          (item.unitPrice * item.quantity * (item.taxPercent || 0)) / 100;
+      });
+    }
+
+    const total = subTotal + taxTotal;
+
+    const updatedInvoice = await Invoice.findByIdAndUpdate(
+      req.params.id,
+      {
+        invoiceNumber,
+        invoiceDate,
+        dueDate,
+        billFrom,
+        billTo,
+        items,
+        notes,
+        paymentTerms,
+        status,
+        subTotal,
+        taxTotal,
+        total,
+      },
+      { new: true }
+    );
+
+    if (!updatedInvoice) return res.status(404).json({ message: "Invoice not found" });
+
+    res.json(updatedInvoice);
   } catch (e) {
     res
       .status(500)
@@ -99,6 +150,10 @@ export const updateInvoice = async (req, res) => {
    @access Private */
 export const deleteInvoice = async (req, res) => {
   try {
+    const invoice = await Invoice.findByIdAndDelete(req.params.id);
+     if (!invoice) return res.status(404).json({ message: "Invoice not found" });
+
+     res.json({message:"Invoice deleted successfully"})
   } catch (e) {
     res
       .status(500)
