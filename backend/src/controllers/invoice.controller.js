@@ -29,11 +29,23 @@ export const createInvoice = async (req, res) => {
 
     const total = subTotal + taxTotal;
 
+    const invoice = new Invoice({
+      user,
+      invoiceNumber,
+      invoiceDate,
+      dueDate,
+      billFrom,
+      billTo,
+      items,
+      notes,
+      paymentTerms,
+      subTotal,
+      taxTotal,
+      total,
+    });
 
-    const invoice = new Invoice({user, invoiceNumber, invoiceDate, dueDate, billFrom, billTo, items, notes, paymentTerms, subTotal, taxTotal, total})
-
-    await invoice.save()
-    res.status(201).json(invoice)
+    await invoice.save();
+    res.status(201).json(invoice);
   } catch (e) {
     res
       .status(500)
@@ -46,6 +58,8 @@ export const createInvoice = async (req, res) => {
    @access Private */
 export const getInvoices = async (req, res) => {
   try {
+    const invoices = await Invoice.find().populate("user", "name email");
+    res.json(invoices);
   } catch (e) {
     res
       .status(500)
