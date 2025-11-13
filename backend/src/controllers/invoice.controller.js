@@ -72,6 +72,9 @@ export const getInvoices = async (req, res) => {
    @access Private */
 export const getInvoiceById = async (req, res) => {
   try {
+    const invoice = await Invoice.findById(req.params.id).populate("user", "name email")
+    if(!invoice) return res.status(404).json({message:"Invoice not found"});
+    res.json(invoice)
   } catch (e) {
     res
       .status(500)
