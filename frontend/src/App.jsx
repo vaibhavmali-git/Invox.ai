@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,10 +14,11 @@ import CreateInvoice from "./pages/Invoices/CreateInvoice";
 import InvoiceDetail from "./pages/Invoices/InvoiceDetail";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 const App = () => {
   return (
-    <div>
+    <AuthProvider>
       <Router>
         <Routes>
           {/* Public routes  */}
@@ -41,7 +41,7 @@ const App = () => {
       </Router>
 
       <Toaster toastOptions={{ className: "", style: { fontSize: "13px" } }} />
-    </div>
+    </AuthProvider>
   );
 };
 
