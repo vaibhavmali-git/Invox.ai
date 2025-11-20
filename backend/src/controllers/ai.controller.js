@@ -130,7 +130,7 @@ export const getDashboardSummary = async (req, res) => {
       });
     }
 
-    /* process and summarise data */
+    /* process and summarize data */
     const totalInvoices = invoices.length;
     const paidInvoices = invoices.filter((inv) => inv.status === "Paid");
     const unpaidInvoices = invoices.filter((inv) => inv.status !== "Paid");
