@@ -12,6 +12,7 @@ import { API_PATHS } from "../../utils/apiPath";
 import { useAuth } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import { validateEmail, validatePassword } from "../../utils/helper";
 
 const Login = () => {
   /* ============ HOOKS ============ */
@@ -27,13 +28,103 @@ const Login = () => {
   const [fieldErrors, setFieldErrors] = useState({ email: "", password: "" });
   const [touched, setTouched] = useState({ email: false, password: false });
 
-  const handleInputChange = (e) => {};
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
-  const handleBlur = (e) => {};
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
 
-  const isFormValid = () => {};
+    /* realtime validation */
+    if (touched[name]) {
+      const newFieldErrors = { ...fieldErrors };
+      if (name === "email") {
+        newFieldErrors.email = validateEmail(value);
+      } else if (name === "password") {
+        newFieldErrors.password = validatePassword(value);
+      }
 
-  const handleSubmit = async () => {};
+      setFieldErrors(newFieldErrors);
+    }
+
+    if (error) setError("");
+  };
+
+  const handleBlur = (e) => {
+    const { name } = e.target;
+
+    setTouched((prev) => ({
+      ...prev,
+      [name]: true,
+    }));
+
+    /* validate on blur */
+    const newFieldErrors = { ...fieldErrors };
+    if (name === "email") {
+      newFieldErrors.email = validateEmail(formData.email);
+    } else if (name === "password") {
+      newFieldErrors.password = validatePassword(formData.password);
+    }
+    setFieldErrors(newFieldErrors);
+  };
+
+  const isFormValid = () => {
+    const emailError = validateEmail(formData.email);
+    const passwordError = validatePassword(formData.password);
+
+    return !emailError && !passwordError && formData.email && formData.password;
+  };
+
+  const handleSubmit = async () => {
+    /* validate all fields before submit */
+    const emailError = validateEmail(formData.email);
+    const passwordError = validatePassword(formData.password);
+
+    if (emailError || passwordError) {
+      setFieldErrors({
+        email: emailError,
+        password: passwordError,
+      });
+      setTouched({
+        email:true,
+        password:true
+      })
+      return;
+    }
+
+    setIsLoading(true)
+    setError("")
+    setSuccess("")
+
+    try{
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, formData)
+
+      if(response.status === 200){
+        const {token} = response.data;
+
+        if(token){
+          setSuccess("Login Successful")
+          login(response.data, token)
+
+          /* redirect based on role */
+          setTimeout(() =>{
+            window.location.href='/dashboard'
+          }, 2000)
+        }
+      } else {
+        setError(response.data.message || "Invalid credentials")
+      }
+    } catch(err){
+        if(err.response && err.response.data && err.response.data.message){
+          setError(err.response.data.message)
+        } else {
+          setError("An error occurred during login. ")
+        }
+    } finally{
+      setIsLoading(false)
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4">
@@ -130,7 +221,7 @@ const Login = () => {
           )}
 
           {success && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
               <p className="text-green-600 text-sm">{success}</p>
             </div>
           )}
