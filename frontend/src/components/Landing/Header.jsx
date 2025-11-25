@@ -3,15 +3,15 @@ import { FileText, Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import ProfileDropdown from "../Layout/ProfileDropdown";
 import Button from "../Ui/Button";
+import { useAuth } from "../../context/AuthContext";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
-  const navigate = useNavigate()
-  const isAuthenticated = false;
-  const user = { name: "Vaibhav", email: "vaibhav@gmail.com" };
+  const navigate = useNavigate();
+  const { isAuthenticated, user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,8 +20,6 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const logout = () => {};
 
   return (
     <header
@@ -110,13 +108,22 @@ const Header = () => {
       {isMenuOpen && (
         <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-lg">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#features" className="block px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-medium transition-colors duration-200">
+            <a
+              href="#features"
+              className="block px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-medium transition-colors duration-200"
+            >
               Features
             </a>
-            <a href="#testimonials" className="block px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-medium transition-colors duration-200">
+            <a
+              href="#testimonials"
+              className="block px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-medium transition-colors duration-200"
+            >
               Testimonials
             </a>
-            <a href="#faq" className="block px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-medium transition-colors duration-200">
+            <a
+              href="#faq"
+              className="block px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-medium transition-colors duration-200"
+            >
               FAQ
             </a>
 
@@ -124,16 +131,25 @@ const Header = () => {
 
             {isAuthenticated ? (
               <div className="p-4">
-                <Button className="w-full" onClick={() => navigate("/dashboard")}>
+                <Button
+                  className="w-full"
+                  onClick={() => navigate("/dashboard")}
+                >
                   Go to dashboard
                 </Button>
               </div>
             ) : (
               <>
-                <Link to="/login" className="block px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors duration-200">
+                <Link
+                  to="/login"
+                  className="block px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors duration-200"
+                >
                   Login
                 </Link>
-                <Link to="/signup" className="block w-full text-left bg-gray-900 hover:bg-gray-800 text-white px-4 py-3 rounded-lg transition-all duration-200">
+                <Link
+                  to="/signup"
+                  className="block w-full text-left bg-gray-900 hover:bg-gray-800 text-white px-4 py-3 rounded-lg transition-all duration-200"
+                >
                   Sign up
                 </Link>
               </>
