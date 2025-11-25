@@ -132,16 +132,14 @@ const DashboardLayout = ({ children, activeMenu }) => {
             {!sidebarCollapsed && <span className="ml-3">Logout</span>}
           </button>
         </div>
-
-       
       </div>
- {/* mobile overlay  */}
-        {isMobile && sidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black/10 bg-opacity-25 z-40 backdrop-blur-sm"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
+      {/* mobile overlay  */}
+      {isMobile && sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/10 bg-opacity-25 z-40 backdrop-blur-sm"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
       {/* MAIN CONTENT  */}
       <div
         className={`flex-1 flex flex-col transition-all duration-300 
@@ -175,6 +173,17 @@ const DashboardLayout = ({ children, activeMenu }) => {
 
           <div className="flex items-center space-x-3">
             {/* profile dropdown  */}
+            <ProfileDropdown
+              isOpen={profileDropdownOpen}
+              onToggle={(e) => {
+                e.stopPropagation();
+                setProfileDropdownOpen(!profileDropdownOpen);
+              }}
+              avatar={user?.avatar || ""}
+              companyName={user?.name||""}
+              email={user?.email || ""}
+              onLogout={logout}
+            />
           </div>
         </header>
 
