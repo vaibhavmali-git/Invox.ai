@@ -5,6 +5,7 @@ import { Loader2, FileText, DollarSign, Plus, File } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import Button from "../../components/Ui/Button";
+import AIInsightsCard from "../../components/AIInsightsCard";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -87,7 +88,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="space-y-8 pb-96">
+    <div className="space-y-8">
       <div>
         <h2 className="text-xl font-semibold text-slate-900">Dashboard</h2>
         <p className="text-sm text-slate-600 mt-1">
@@ -128,6 +129,7 @@ const Dashboard = () => {
       </div>
 
       {/* Ai insights card  */}
+      <AIInsightsCard />
 
       {/* Recent invoices  */}
       <div className="w-full bg-white border border-slate-200 rounded-lg shadow-sm shadow-gray-100 overflow-hidden">
