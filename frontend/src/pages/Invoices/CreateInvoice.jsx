@@ -6,8 +6,12 @@ import { Plus, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import moment from "moment";
 import { useAuth } from "../../context/AuthContext";
+import InputField from "../../components/Ui/InputField";
+import SelectField from "../../components/Ui/SelectField";
+import TextareaField from "../../components/Ui/TextareaField";
+import Button from "../../components/Ui/Button";
 
-const CreateInvoice = ({existingInvoice, onSave}) => {
+const CreateInvoice = ({ existingInvoice, onSave }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
@@ -100,26 +104,125 @@ const CreateInvoice = ({existingInvoice, onSave}) => {
       ],
     });
   };
-  
-  const handleRemoveItem=(index)=>{}
 
-  const {subtotal, taxTotal, total}=(()=>{
-    let subtotal=0,taxTotal=0;
+  const handleRemoveItem = (index) => {};
 
-    formData.items.forEach((item)=>{
-      const itemTotal=(item.quantity || 0)*(item.unitPrice || 0);
-      subtotal+=itemTotal
-      taxTotal+=itemTotal*((item.taxPercent||0)/100)
-    })
-    return {subtotal, taxTotal, total:subtotal+taxTotal}
-  })()
+  const { subtotal, taxTotal, total } = (() => {
+    let subtotal = 0,
+      taxTotal = 0;
 
-  const handleSubmit=async(e)=>{
-    e.preventDefault()
-    setLoading(true)
-  }
+    formData.items.forEach((item) => {
+      const itemTotal = (item.quantity || 0) * (item.unitPrice || 0);
+      subtotal += itemTotal;
+      taxTotal += itemTotal * ((item.taxPercent || 0) / 100);
+    });
+    return { subtotal, taxTotal, total: subtotal + taxTotal };
+  })();
 
-  return <div>Create Invoice</div>;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="num">
+      <div className="">
+        <h2 className="">
+          {existingInvoice ? "Edit Invoice" : "Create Invoice"}
+        </h2>
+        <Button type="submit" isLoading={loading || isGeneratingNumber}>
+          {existingInvoice ? "Save Changes" : "Save Invoice"}
+        </Button>
+      </div>
+
+      <div className="">
+        <div className="">
+          <InputField
+            label="InvoiceNumber"
+            name="invoiceNumber"
+            readOnly
+            value={formData.invoiceNumber}
+            placeholder={isGeneratingNumber ? "Generating..." : ""}
+            disabled
+          />
+          <InputField
+            label="InvoiceDate"
+            type="date"
+            name="invoiceDate"
+            value={formData.invoiceDate}
+            onChange={handleInputChange}
+          />
+          <InputField
+            label="Due Date"
+            type="date"
+            name="dueDate"
+            value={formData.dueDate}
+            onChange={handleInputChange}
+          />
+        </div>
+      </div>
+
+      <div className="">
+        <div className="">
+          <h3>Bill From</h3>
+          <InputField
+            label="Business Name"
+            name="businessName"
+            value={formData.billFrom.businessName}
+            onChange={(e) => handleInputChange(e, "billFrom")}
+          />
+          <InputField
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.billFrom.email}
+            onChange={(e) => handleInputChange(e, "billFrom")}
+          />
+          <TextareaField
+            label="Address"
+            name="address"
+            value={formData.billFrom.address}
+            onChange={(e) => handleInputChange(e, "billFrom")}
+          />
+          <InputField
+            label="Phone"
+            name="phone"
+            value={formData.billFrom.phone}
+            onChange={(e) => handleInputChange(e, "billFrom")}
+          />
+        </div>
+        <div className="">
+          <h3 className="">Bill To</h3>
+          <InputField
+            label="Client Name"
+            name="clientName"
+            value={formData.billTo.clientName}
+            onChange={(e) => handleInputChange(e, "billTo")}
+          />
+          <InputField
+            label="Client Email"
+            name="email"
+            type="email"
+            value={formData.billTo.clientEmail}
+            onChange={(e) => handleInputChange(e, "billTo")}
+          />
+           <TextareaField
+            label="Client Address"
+            name="address"
+            value={formData.billTo.clientAddress}
+            onChange={(e) => handleInputChange(e, "billTo")}
+          />
+           <InputField
+            label="Client Phone"
+            name="phone"
+            type="phone"
+            value={formData.billTo.phone}
+            onChange={(e) => handleInputChange(e, "billTo")}
+          />
+        </div>
+      </div>
+    </form>
+  );
 };
 
 export default CreateInvoice;
