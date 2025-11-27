@@ -125,9 +125,9 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="num">
-      <div className="">
-        <h2 className="">
+    <form onSubmit={handleSubmit} className="space-y-8 pb-[100vh] num">
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-slate-900">
           {existingInvoice ? "Edit Invoice" : "Create Invoice"}
         </h2>
         <Button type="submit" isLoading={loading || isGeneratingNumber}>
@@ -135,8 +135,8 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
         </Button>
       </div>
 
-      <div className="">
-        <div className="">
+      <div className="bg-white p-6 rounded-lg shadow-sm shadow-gray-100 border border-slate-200">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <InputField
             label="InvoiceNumber"
             name="invoiceNumber"
@@ -162,9 +162,9 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
         </div>
       </div>
 
-      <div className="">
-        <div className="">
-          <h3>Bill From</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="bg-white p-6 rounded-lg shadow-sm shadow-gray-100 border border-slate-200 space-y-4">
+          <h3 className="text-lg font-semibold text-slate-900 mb-2">Bill From</h3>
           <InputField
             label="Business Name"
             name="businessName"
@@ -191,8 +191,9 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
             onChange={(e) => handleInputChange(e, "billFrom")}
           />
         </div>
-        <div className="">
-          <h3 className="">Bill To</h3>
+
+        <div className="bg-white p-6 rounded-lg shadow-sm shadow-gray-100 border border-slate-200 space-y-4">
+          <h3 className="text-lg font-semibold text-slate-900 mb-2">Bill To</h3>
           <InputField
             label="Client Name"
             name="clientName"
