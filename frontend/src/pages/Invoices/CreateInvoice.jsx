@@ -9,7 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 import InputField from "../../components/Ui/InputField";
 import SelectField from "../../components/Ui/SelectField";
 import TextareaField from "../../components/Ui/TextareaField";
-import Button from "../../components/ui/Button";
+import Button from "../../components/Ui/Button";
 
 const CreateInvoice = ({ existingInvoice, onSave }) => {
   const navigate = useNavigate();
