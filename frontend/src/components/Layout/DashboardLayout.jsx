@@ -39,7 +39,8 @@ const DashboardLayout = ({ children, activeMenu }) => {
   /* hide responsive behavior */
   useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth < 768;
+      // const mobile = window.innerWidth < 768;
+      const mobile = window.innerWidth < 1122
       setIsMobile(mobile);
       if (!mobile) {
         setSidebarOpen(false);

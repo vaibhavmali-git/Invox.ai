@@ -52,18 +52,37 @@ const AllInvoices = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    if(window.confirm("Are you sure you want to delete this invoice?")){
-      try{
-        await axiosInstance.delete(API_PATHS.INVOICE.DELETE_INVOICE(id))
-        setInvoices(invoices.filter(invoice => invoice._id !== id))
-      } catch(err){
-        setError("Failed to delete the invoice")
-        console.error(err)
+    if (window.confirm("Are you sure you want to delete this invoice?")) {
+      try {
+        await axiosInstance.delete(API_PATHS.INVOICE.DELETE_INVOICE(id));
+        setInvoices(invoices.filter((invoice) => invoice._id !== id));
+      } catch (err) {
+        setError("Failed to delete the invoice");
+        console.error(err);
       }
     }
   };
 
-  const handleStatusChange = async (invoice) => {};
+  const handleStatusChange = async (invoice) => {
+    setStatusChangeLoading(invoice._id);
+    try {
+      const newStatus = invoice.status === "Paid" ? "Unpaid" : "Paid";
+      const updatedInvoice = {...invoice, status:newStatus}
+      const response = await axiosInstance.put(
+        API_PATHS.INVOICE.UPDATE_INVOICE(invoice._id),
+        updatedInvoice
+      );
+
+      setInvoices(
+        invoices.map((inv) => (inv._id === invoice._id ? response.data : inv))
+      );
+    } catch (err) {
+      setError("Failed to update invoice status.");
+      console.error(err);
+    } finally {
+      setStatusChangeLoading(null);
+    }
+  };
 
   const handleOpenReminderModal = (invoiceId) => {
     setSelectedInvoiceId(invoiceId);
@@ -201,7 +220,7 @@ const AllInvoices = () => {
                     Client
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                    Amount
+                   Amount
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                     Due Date
@@ -234,7 +253,7 @@ const AllInvoices = () => {
                       onClick={() => navigate(`/invoices/${invoice._id}`)}
                       className="px-6 py-4 whitespace-nowrap text-sm  text-slate-600 cursor-pointer num"
                     >
-                      {invoice.total.toFixed(2)}
+                      ${invoice.total.toFixed(2)}
                     </td>
                     <td
                       onClick={() => navigate(`/invoices/${invoice._id}`)}
@@ -270,23 +289,28 @@ const AllInvoices = () => {
                             ? "Mark Unpaid"
                             : "Mark Paid"}
                         </Button>
-                         <Button
+                        <Button
                           size="small"
                           variant="ghost"
                           onClick={() => navigate(`/invoices/${invoice._id}`)}
                         >
-                          <Edit className="w-4 h-4"/>
+                          <Edit className="w-4 h-4" />
                         </Button>
-                         <Button
+                        <Button
                           size="small"
                           variant="ghost"
                           onClick={() => handleDelete(invoice._id)}
                         >
-                          <Trash2 className="w-4 h-4 text-red-500"/>
+                          <Trash2 className="w-4 h-4 text-red-500" />
                         </Button>
-                        {invoice.status !== 'Paid' && (
-                          <Button size="small" variant="ghost" onClick={()=>handleOpenReminderModal(invoice._id)} title="Generate Reminder">
-                            <Mail  className="w-4 h-4 text-blue-500"/>
+                        {invoice.status !== "Paid" && (
+                          <Button
+                            size="small"
+                            variant="ghost"
+                            onClick={() => handleOpenReminderModal(invoice._id)}
+                            title="Generate Reminder"
+                          >
+                            <Mail className="w-4 h-4 text-blue-500" />
                           </Button>
                         )}
                       </div>
