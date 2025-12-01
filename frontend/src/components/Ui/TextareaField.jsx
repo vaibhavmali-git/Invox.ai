@@ -21,7 +21,7 @@ const TextareaField = ({ icon: Icon, label, name, ...props }) => {
           name={name}
           rows={3}
           {...props}
-          className={`w-full min-h-[100px] pr-3 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 resize-vertical focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+          className={`w-full min-h-[100px] pr-3 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 resize-vertical focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent num ${
             Icon ? "pl-10" : "pl-3"
           }`}
         ></textarea>
