@@ -8,7 +8,7 @@ import moment from "moment";
 import { useAuth } from "../../context/AuthContext";
 import InputField from "../../components/Ui/InputField";
 import SelectField from "../../components/Ui/SelectField";
-import TextareaField from "../../components/Ui/TextareaField";
+import TextareaField from "../../components/ui/TextareaField";
 import Button from "../../components/Ui/Button";
 
 const CreateInvoice = ({ existingInvoice, onSave }) => {
@@ -254,13 +254,13 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
             label="Client Email"
             name="email"
             type="email"
-            value={formData.billTo.clientEmail}
+            value={formData.billTo.email}
             onChange={(e) => handleInputChange(e, "billTo")}
           />
           <TextareaField
             label="Client Address"
             name="address"
-            value={formData.billTo.clientAddress}
+            value={formData.billTo.address}
             onChange={(e) => handleInputChange(e, "billTo")}
           />
           <InputField
