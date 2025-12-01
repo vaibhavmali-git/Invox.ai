@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Sparkles, Text } from "lucide-react";
+import { Sparkles, Text, X  } from "lucide-react";
 import Button from "../Ui/Button";
-import TextareaField from "../ui/TextareaField";
+import TextareaField from "../Ui/TextareaField";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPath";
 import toast from "react-hot-toast";
@@ -57,9 +57,9 @@ const CreateWithAIModal = ({ isOpen, onClose }) => {
             </h3>
             <button
               onClick={onClose}
-              className="text-slate-400 hover:text-slate-900"
+              className="text-slate-400 hover:text-slate-900 -mt-2"
             >
-              &times;
+              <X  className="w-4 h-4"/>
             </button>
           </div>
 
