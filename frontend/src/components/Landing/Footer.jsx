@@ -1,20 +1,5 @@
 import { Link } from "react-router-dom";
-import { Github, Linkedin, FileText, Twitter } from "lucide-react";
-
-const FooterLink = ({ href, to, children }) => {
-  const className =
-    "block text-gray-400 hover:text-white transition-colors duration-200";
-
-  if (to) {
-    return <Link className={className}>{children}</Link>;
-  }
-
-  return (
-    <a href={href} className={className}>
-      {children}
-    </a>
-  );
-};
+import { Github, Linkedin, Globe } from "lucide-react";
 
 const SocialLink = ({ href, children }) => {
   return (
@@ -33,74 +18,35 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="space-y-4 md:col-span-2 lg:col-span-1">
-            <Link className="flex items-center space-x-2 mb-6" to="/">
-              <div className="w-8 h-8 bg-blue-950 rounded-md flex items-center justify-center">
-                <FileText />
-              </div>
-              <span className="text-xl font-bold">AI Invoice App</span>
-            </Link>
-            <p className="text-gray-400 leading-relaxed max-w-sm">
-              The simplest way to create and send professional invoices.
-            </p>
+        <div className="flex flex-col items-center justify-center space-y-8">
+          <Link className="flex items-center space-x-2" to="/">
+            <span className="text-xl font-bold">InvoAIce</span>
+          </Link>
+          
+          <p className="text-gray-400 text-center max-w-md">
+            The simplest way to create and send professional invoices.
+          </p>
+
+          <div className="flex space-x-4">
+            <SocialLink href="https://www.linkedin.com/in/vaibhavmali-li/">
+              <Linkedin className="w-5 h-5" />
+            </SocialLink>
+            <SocialLink href="https://github.com/vaibhavmali-git">
+              <Github className="w-5 h-5" />
+            </SocialLink>
+            <SocialLink href="https://vaibhavmali.netlify.app">
+              <Globe className="w-5 h-5" />
+            </SocialLink>
           </div>
 
-          <div>
-            <h3 className="text-base font-semibold mb-4">Product</h3>
-            <ul className="space-y-2">
-              <li>
-                <FooterLink href="#features">Features</FooterLink>
-              </li>
-              <li>
-                <FooterLink href="#testimonials">Testimonials</FooterLink>
-              </li>
-              <li>
-                <FooterLink href="#faq">FAQ</FooterLink>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-base font-semibold mb-4">Company</h3>
-            <ul className="space-y-2">
-              <li>
-                <FooterLink to="/about">About Us</FooterLink>
-              </li>
-              <li>
-                <FooterLink to="/contact">Contact</FooterLink>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-base font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <FooterLink to="/privacy">Privacy policy</FooterLink>
-              </li>
-              <li>
-                <FooterLink to="/terms">Terms of Service</FooterLink>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-800 py-8 mt-16">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400">
-              &copy; 2025 Ai Invoice App. All rights reserved.
-            </p>
-            <div className="flex space-x-4">
-              <SocialLink href="#">
-                <Twitter className="w-5 h-5" />
-              </SocialLink>
-              <SocialLink href="#">
-                <Github className="w-5 h-5" />
-              </SocialLink>
-              <SocialLink href="#">
-                <Linkedin className="w-5 h-5" />
-              </SocialLink>
+          <div className="border-t border-gray-800 pt-8 w-full">
+            <div className="flex flex-col items-center space-y-2">
+              <p className="text-gray-400 text-sm">
+                Developed by <a href="https://vaibhavmali.netlify.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">Vaibhav Mali</a>
+              </p>
+              <p className="text-gray-400 text-sm num">
+                &copy; 2025 InvoAIce. All rights reserved.
+              </p>
             </div>
           </div>
         </div>

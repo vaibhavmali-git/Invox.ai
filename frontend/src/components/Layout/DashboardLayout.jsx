@@ -99,12 +99,10 @@ const DashboardLayout = ({ children, activeMenu }) => {
         {/* company logo  */}
         <div className="flex items-center h-16 border-b border-gray-200 px-6">
           <Link className="flex items-center space-x-3" to="/dashboard">
-            <div className="h-8 w-8 bg-linear-to-r from-blue-900 to-blue-700 rounded-lg flex items-center justify-center">
-              <Briefcase className="h-5 w-5 text-white" />
-            </div>
+            
             {!sidebarCollapsed && (
-              <span className="text-gray-900 font-bold text-xl">
-                AI Invoice App
+              <span className="text-blue-900 font-bold text-xl">
+                InvoAIce
               </span>
             )}
           </Link>

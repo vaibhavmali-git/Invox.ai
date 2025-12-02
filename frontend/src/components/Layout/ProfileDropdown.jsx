@@ -17,8 +17,8 @@ const ProfileDropdown = ({
         {avatar ? (
           <img src={avatar} alt="Avatar" className="h-9 w-9 rounded-xl object-cover" />
         ) : (
-          <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center">
-            <span className="text-white font-semibold text-sm">{companyName.charAt(0).toUpperCase()}</span>
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center">
+            <span className="text-white font-semibold text-md">{companyName.charAt(0).toUpperCase()}</span>
           </div>
         )}
 

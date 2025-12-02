@@ -7,8 +7,8 @@ const Features = () => {
     <section id="features" className='py-20 lg:py-28 bg-gray-50'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='text-center mb-16'>
-                <h2 className='text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4'>Powerful features to run your business</h2>
-                <p className='text-xl text-gray-600 max-w-3xl mx-auto'>Everything you need to manage you invoicing and get paid</p>
+                <h2 className='text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4'>Useful features to simplify your invoicing</h2>
+                <p className='text-xl text-gray-600 max-w-3xl mx-auto'>Create invoices, track them, and handle reminders, all in one place</p>
             </div>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
@@ -16,7 +16,7 @@ const Features = () => {
                     <div className='w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-6'><feature.icon className='w-8 h-8 text-blue-900'/></div>
                     <h3 className='text-xl font-bold text-gray-900 mb-4'>{feature.title}</h3>
                     <p className='text-gray-600 leading-relaxed'>{feature.description}</p>
-                    <a className='inline-flex items-center text-blue-900 font-medium mt-4 hover:text-black transition-colors duration-200' href='#'>Learn More <ArrowRight className='w-4 h-4 ml-2'/></a>
+                   
                 </div>))}
             </div>
         </div>

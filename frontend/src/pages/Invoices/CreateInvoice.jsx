@@ -173,7 +173,7 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 pb-[100vh]">
+    <form onSubmit={handleSubmit} className="space-y-8">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-slate-900">
           {existingInvoice ? "Edit Invoice" : "Create Invoice"}

@@ -381,26 +381,6 @@ const Signup = () => {
             </div>
           )}
 
-          {/* terms & conditions  */}
-          <div className="flex items-start pt-2">
-            <input
-              type="checkBox"
-              id="terms"
-              className="w-4 h-4 text-black border-gray-300 rounded focus:ring-black mt-1"
-              required
-            />
-            <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
-              I agree to the{" "}
-              <button className="text-black hover:underline">
-                Terms of Service
-              </button>{" "}
-              and{" "}
-              <button className="text-black hover:underline">
-                Privacy Policy
-              </button>
-            </label>
-          </div>
-
           {/* signup button  */}
           <button
             className="group w-full bg-gradient-to-r from-blue-950 to-blue-900 text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center justify-center"

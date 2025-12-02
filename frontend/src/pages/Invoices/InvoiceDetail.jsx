@@ -13,7 +13,7 @@ import {
 import toast from "react-hot-toast";
 import CreateInvoice from "./CreateInvoice";
 import Button from "../../components/Ui/Button";
-import ReminderModal from "../../components/invoices/ReminderModal";
+import ReminderModal from "../../components/Invoices/ReminderModal";
 
 const InvoiceDetail = () => {
   const { id } = useParams();
