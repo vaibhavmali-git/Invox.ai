@@ -8,7 +8,7 @@ import moment from "moment";
 import { useAuth } from "../../context/AuthContext";
 import InputField from "../../components/Ui/InputField";
 import SelectField from "../../components/Ui/SelectField";
-import TextareaField from "../../components/ui/TextareaField";
+import TextareaField from "../../components/Ui/TextareaField";
 import Button from "../../components/Ui/Button";
 
 const CreateInvoice = ({ existingInvoice, onSave }) => {
@@ -173,7 +173,7 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 pb-[100vh] num">
+    <form onSubmit={handleSubmit} className="space-y-8 pb-[100vh]">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-slate-900">
           {existingInvoice ? "Edit Invoice" : "Create Invoice"}
@@ -321,7 +321,7 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
                       name="quantity"
                       value={item.quantity}
                       onChange={(e) => handleInputChange(e, null, index)}
-                      className="w-full h-10 px-3 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full h-10 px-3 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent num"
                       placeholder="1"
                     />
                   </td>
@@ -331,7 +331,7 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
                       name="unitPrice"
                       value={item.unitPrice}
                       onChange={(e) => handleInputChange(e, null, index)}
-                      className="w-full h-10 px-3 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full h-10 px-3 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent num"
                       placeholder="0.00"
                     />
                   </td>
@@ -341,11 +341,11 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
                       name="taxPercent"
                       value={item.taxPercent}
                       onChange={(e) => handleInputChange(e, null, index)}
-                      className="w-full h-10 px-3 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full h-10 px-3 py-2 border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent num"
                       placeholder="0"
                     />
                   </td>
-                  <td className="px-2 sm:px-6 py-4 text-sm text-slate-500">
+                  <td className="px-2 sm:px-6 py-4 text-sm text-slate-500 num">
                     $
                     {(
                       (item.quantity || 0) *
@@ -402,13 +402,13 @@ const CreateInvoice = ({ existingInvoice, onSave }) => {
         <div className="bg-white p-6 rounded-lg shadow-sm shadow-gray-100 border border-slate-200 flex flex-col justify-center">
           <div className="space-y-4">
             <div className="flex justify-between text-sm text-slate-600">
-              <p>Subtotal:</p> <p>${subtotal.toFixed(2)}</p>
+              <p>Subtotal:</p> <p className="num">${subtotal.toFixed(2)}</p>
             </div>
             <div className="flex justify-between text-sm text-slate-600">
-              <p>Tax:</p> <p>${taxTotal.toFixed(2)}</p>
+              <p>Tax:</p> <p className="num">${taxTotal.toFixed(2)}</p>
             </div>
             <div className="flex justify-between text-lg font-semibold text-slate-900 border-t border-slate-200 pt-4 mt-4">
-              <p>Total:</p> <p>${total.toFixed(2)}</p>
+              <p>Total:</p> <p className="num">${total.toFixed(2)}</p>
             </div>
           </div>
         </div>
