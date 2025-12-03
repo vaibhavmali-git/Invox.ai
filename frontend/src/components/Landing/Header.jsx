@@ -1,42 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { FileText, Menu, X } from "lucide-react";
+import React, { useState } from "react";
+import { Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import ProfileDropdown from "../Layout/ProfileDropdown";
 import Button from "../Ui/Button";
 import { useAuth } from "../../context/AuthContext";
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useAuth();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 bg-gray-100
-      ${isScrolled ? "bg-white/50 backdrop-blur-lg shadow-sm" : "bg-white/0"}`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          <div className="flex items-center space-x-2">
-            <span className="text-xl font-bold text-red-900">
-              InvoAIce
+    <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-200">
+      <div className="max-w-7xl mx-auto border-x border-gray-200 bg-white/50 h-20 px-6 sm:px-8">
+        <div className="flex items-center justify-between h-full">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-bold text-gray-900 tracking-tight">
+              InvoAIce.
             </span>
           </div>
 
-       
-
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-8">
             {isAuthenticated ? (
               <ProfileDropdown
                 isOpen={profileDropdownOpen}
@@ -47,31 +34,32 @@ const Header = () => {
                 avatar={user?.avatar || ""}
                 companyName={user?.name || ""}
                 email={user?.email || ""}
-                logout={logout}
+                onLogout={logout}
               />
             ) : (
-              <>
+              <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
-                  className="text-black hover:text-gray-900 font-medium transition-colors duration-200"
+                  className="text-gray-900 font-medium text-sm hover:text-gray-700 transition-colors px-5 py-2.5 rounded-lg border border-gray-200"
                 >
                   Login
                 </Link>
 
                 <Link
                   to="/signup"
-                  className="bg-linear-to-r from-red-950 to-red-900 hover:bg-gray-800 text-white px-6 py-2.5 rounded-lg font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                  className="bg-gray-900 hover:bg-black text-white px-5 py-2.5 rounded-lg font-medium text-sm transition-all shadow-sm hover:shadow-md"
                 >
                   Signup
                 </Link>
-              </>
+              </div>
             )}
           </div>
 
+          {/* Mobile Menu Button */}
           <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+              className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
             >
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -83,38 +71,35 @@ const Header = () => {
         </div>
       </div>
 
+      {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-lg">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-           
-
-         
-
-            {isAuthenticated ? (
-              <div className="p-4">
+        <div className="lg:hidden border-b border-gray-200 bg-white">
+          <div className="max-w-7xl mx-auto border-x border-gray-200 px-6 py-4 space-y-4">
+            <div className="border-t border-gray-100 pt-4">
+              {isAuthenticated ? (
                 <Button
                   className="w-full"
                   onClick={() => navigate("/dashboard")}
                 >
                   Go to dashboard
                 </Button>
-              </div>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="block px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors duration-200"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/signup"
-                  className="block w-full text-left bg-gray-900 hover:bg-gray-800 text-white px-4 py-3 rounded-lg transition-all duration-200"
-                >
-                  Sign up
-                </Link>
-              </>
-            )}
+              ) : (
+                <div className="flex flex-col gap-3">
+                  <Link
+                    to="/login"
+                    className="text-center py-2 text-gray-600 font-medium"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="text-center bg-gray-900 text-white py-3 rounded-lg font-medium"
+                  >
+                    Signup
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

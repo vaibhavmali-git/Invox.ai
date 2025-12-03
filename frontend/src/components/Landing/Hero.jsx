@@ -1,41 +1,65 @@
 import { Link } from "react-router-dom";
-import HERO_IMG from "../../assets/hero-img.png";
+import HERO_IMG from "../../assets/heroimg.png";
 import { useAuth } from "../../context/AuthContext";
+import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
-  const {isAuthenticated} = useAuth()
+  const { isAuthenticated } = useAuth();
 
   return (
-    <section className="relative bg-[#fbfbfb] overflow-hidden">
-      <div className="absolute inset-0 bg-grid-white/[0.05] bg-size-[60px_60px]"></div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-        <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-red-950 leading-tight mb-6">Invoicing, Simplified by AI</h1>
-          <p className="text-base sm:text-xl text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto">
-           Let AI turn plain text into invoices, send timely reminders, and give you insights that make managing finances easier.
-          </p>
+    <section className="bg-white border-b border-gray-200 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-12 pb-20 sm:pt-20 sm:pb-24 border-x border-gray-200">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="relative z-10 max-w-2xl">
+            <h1 className="text-4xl sm:text-6xl font-bold text-gray-900 leading-[1.15] tracking-tight mb-6">
+              Transform Your Invoicing with <br />
+              <span className="text-gray-400 italic">AI-Driven Insights</span>
+            </h1>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            {isAuthenticated ? (
-              <Link to="/dashboard" className="bg-linear-to-r from-red-950 to-red-900 text-white px-8 py-4 rounded-lg font-bold text-base sm:text-lg hover:bg-red-900 transition-all duration-200 hover:scale-105 hover:shadow-2xl transform">
-                Go to Dashboard
-              </Link>
-            ) : (
-              <>
-                <Link to="/signup" className="bg-linear-to-r from-red-950 to-red-900 text-white px-8 py-4 rounded-lg font-bold text-base sm:text-lg hover:bg-gray-900 transition-all duration-200 hover:scale-105 hover:shadow-2xl transform">
-                  Get Started for Free
+            <p className="text-md text-gray-500 mb-8 leading-relaxed">
+              Let AI turn plain text into invoices, send timely reminders, and
+              give you insights that make managing finances easier.
+            </p>
+
+            <div className="flex flex-row items-center gap-4">
+              {isAuthenticated ? (
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-gray-900 rounded-lg hover:bg-black transition-all"
+                >
+                  Go to Dashboard
                 </Link>
-                
-              </>
-            )}
+              ) : (
+                <Link
+                  to="/signup"
+                  className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-gray-900 rounded-lg hover:bg-black transition-all shadow-lg shadow-gray-200"
+                >
+                  Get Started
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              )}
 
-            <a href="#features" className="border-2 border-black text-black px-7.5 py-3.5 rounded-lg font-bold text-base sm:text-lg hover:bg-white hover:text-black transition-all duration-200 hover:scale-105 ">
-              Learn More
-            </a>
+              <a
+                href="#features"
+                className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-all"
+              >
+                Features
+              </a>
+            </div>
           </div>
 
-          <div className="relative mt-12 sm:mt-16 max-w-5xl">
-            <img src={HERO_IMG} alt="Invoice App Screenshot" className="rounded-lg shadow-2xl shadow-gray-300 border-4 border-gray-200/20" />
+          <div className="relative mt-10 lg:mt-0">
+            <div className="relative rounded-xl overflow-hidden border border-gray-200 shadow-2xl shadow-gray-100">
+              <img
+                src={HERO_IMG}
+                alt="App Dashboard"
+                className="w-full h-full object-cover"
+              />
+
+              <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+            </div>
+
+            <div className="absolute -inset-4 bg-gray-100/50 -z-10 blur-2xl rounded-full opacity-50"></div>
           </div>
         </div>
       </div>
