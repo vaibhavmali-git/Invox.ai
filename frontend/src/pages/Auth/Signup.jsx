@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { validateEmail, validatePassword } from "../../utils/helper";
+import signupImg from "../../assets/heroimg-signup.jpg"
 
 const Signup = () => {
   /* ============ HOOKS ============ */
@@ -210,7 +211,7 @@ const Signup = () => {
       <div className="hidden bg-white lg:flex w-1/2 h-screen p-10 items-center justify-center overflow-hidden">
         <div className="w-full h-full rounded-xl overflow-hidden relative border border-gray-200 shadow-lg shadow-gray-100">
           <img
-            src="/src/assets/heroimg-signup.jpg"
+            src={signupImg}
             alt="Invox.ai Dashboard"
             className="w-full h-full object-cover object-top"
           />
