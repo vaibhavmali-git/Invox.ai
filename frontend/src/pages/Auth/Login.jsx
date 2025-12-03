@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Eye,
-  EyeOff,
-  Loader2,
-  Mail,
-  Lock,
-  FileText,
-  ArrowRight,
-} from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { API_PATHS } from "../../utils/apiPath";
 import { useAuth } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
@@ -30,232 +22,198 @@ const Login = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
+    setFormData((prev) => ({ ...prev, [name]: value }));
     /* realtime validation */
     if (touched[name]) {
       const newFieldErrors = { ...fieldErrors };
-      if (name === "email") {
-        newFieldErrors.email = validateEmail(value);
-      } else if (name === "password") {
+      if (name === "email") newFieldErrors.email = validateEmail(value);
+      if (name === "password")
         newFieldErrors.password = validatePassword(value);
-      }
-
       setFieldErrors(newFieldErrors);
     }
-
     if (error) setError("");
   };
 
   const handleBlur = (e) => {
     const { name } = e.target;
-
-    setTouched((prev) => ({
-      ...prev,
-      [name]: true,
-    }));
-
+    setTouched((prev) => ({ ...prev, [name]: true }));
     /* validate on blur */
     const newFieldErrors = { ...fieldErrors };
-    if (name === "email") {
-      newFieldErrors.email = validateEmail(formData.email);
-    } else if (name === "password") {
+    if (name === "email") newFieldErrors.email = validateEmail(formData.email);
+    if (name === "password")
       newFieldErrors.password = validatePassword(formData.password);
-    }
     setFieldErrors(newFieldErrors);
   };
 
   const isFormValid = () => {
     const emailError = validateEmail(formData.email);
     const passwordError = validatePassword(formData.password);
-
     return !emailError && !passwordError && formData.email && formData.password;
   };
 
   const handleSubmit = async () => {
-    /* validate all fields before submit */
     const emailError = validateEmail(formData.email);
     const passwordError = validatePassword(formData.password);
 
     if (emailError || passwordError) {
-      setFieldErrors({
-        email: emailError,
-        password: passwordError,
-      });
-      setTouched({
-        email:true,
-        password:true
-      })
+      setFieldErrors({ email: emailError, password: passwordError });
+      setTouched({ email: true, password: true });
       return;
     }
 
-    setIsLoading(true)
-    setError("")
-    setSuccess("")
+    setIsLoading(true);
+    setError("");
+    setSuccess("");
 
-    try{
-      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, formData)
-
-      if(response.status === 200){
-        const {token} = response.data;
-
-        if(token){
-          setSuccess("Login Successful")
-          login(response.data, token)
-
-          /* redirect based on role */
-          setTimeout(() =>{
-            window.location.href='/dashboard'
-          }, 2000)
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, formData);
+      if (response.status === 200) {
+        const { token } = response.data;
+        if (token) {
+          setSuccess("Login Successful");
+          login(response.data, token);
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 2000);
         }
       } else {
-        setError(response.data.message || "Invalid credentials")
+        setError(response.data.message || "Invalid credentials");
       }
-    } catch(err){
-        if(err.response && err.response.data && err.response.data.message){
-          setError(err.response.data.message)
-        } else {
-          setError("An error occurred during login. ")
-        }
-    } finally{
-      setIsLoading(false)
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("An error occurred during login.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4">
-      <div className="w-full max-w-sm">
-        {/* header  */}
-        <div className="text-center mb-8">
-          <div className="w-12 h-12 bg-gradient-to-r from-red-950 to-red-900 rounded-lg mx-auto mb-6 flex items-center justify-center">
-            <FileText className="w-6 h-6 text-white" />
+    <div className="min-h-screen bg-gray-50 flex ">
+      {/*  LOGIN FORM*/}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 md:px-20 lg:px-24 xl:px-32 py-12 border-l">
+        <div className="w-full max-w-xs mx-auto">
+          <div className="mb-10">
+            <h1 className="text-3xl font-medium text-gray-900 mb-3">Log in</h1>
+            <p className="text-gray-600">
+              Welcome back! Enter your credentials to access your dashboard.
+            </p>
           </div>
-          <h1 className="text-2xl font-semibold text-gray-900 mb-2">
-            Log to your Account
-          </h1>
-          <p className="text-gray-600 text-sm">
-            Welcome back to invoice generator
-          </p>
-        </div>
 
-        {/* form  */}
-        <div className="space-y-4">
-          {/* email  */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <div className="space-y-5 border border-gray-200 p-6 rounded-lg bg-white shadow-lg shadow-gray-100">
+            {/* Email Input */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                Email
+              </label>
               <input
                 name="email"
                 type="email"
-                required
                 value={formData.email}
                 onChange={handleInputChange}
                 onBlur={handleBlur}
-                className={`w-full pl-12 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all
-                ${
-                  fieldErrors.email && touched.email
-                    ? "border-red-100 focus:ring-red-100"
-                    : "border-gray-300 focus:ring-black"
-                }`}
+                className={`w-full px-4 py-2 rounded-md border bg-white text-gray-900 focus:ring-2 focus:ring-red-100 outline-none transition-all text-sm
+                  ${
+                    fieldErrors.email && touched.email
+                      ? "border-red-500"
+                      : "border-gray-200 focus:border-red-500"
+                  }
+                `}
                 placeholder="Enter your email"
               />
+              {fieldErrors.email && touched.email && (
+                <p className="mt-1 text-sm text-red-600">{fieldErrors.email}</p>
+              )}
             </div>
-            {fieldErrors.email && touched.email && (
-              <p className="mt-1 text-sm text-red-600">{fieldErrors.email}</p>
+
+            {/* Password Input */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-2 rounded-md border bg-white text-gray-900 focus:ring-2 focus:ring-red-100 outline-none transition-all text-sm
+                    ${
+                      fieldErrors.password && touched.password
+                        ? "border-red-500"
+                        : "border-gray-200 focus:border-red-500"
+                    }
+                  `}
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+              {fieldErrors.password && touched.password && (
+                <p className="mt-1 text-sm text-red-600">
+                  {fieldErrors.password}
+                </p>
+              )}
+            </div>
+
+            {/* Error/Success Messages */}
+            {error && (
+              <div className="p-3 bg-red-50 border border-red-100 rounded-lg text-red-600 text-sm">
+                {error}
+              </div>
             )}
-          </div>
-
-          {/* password  */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
-            <div className="relative">
-              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                name="password"
-                type={showPassword ? "text" : "password"}
-                required
-                value={formData.password}
-                onChange={handleInputChange}
-                onBlur={handleBlur}
-                className={`w-full pl-12 pr-12 py-3 border rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all 
-                  ${
-                    fieldErrors.password && touched.password
-                      ? "border-red-100 focus:ring-red-100"
-                      : "border-gray-300 focus:ring-black"
-                  }`}
-                placeholder="Enter your password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover-text-gray-600 transition-colors"
-              >
-                {showPassword ? (
-                  <EyeOff className="w-5 h-5" />
-                ) : (
-                  <Eye className="w-5 h-5" />
-                )}
-              </button>
-            </div>
-            {fieldErrors.password && touched.password && (
-              <p className="mt-1 text-sm text-red-600">
-                {fieldErrors.password}
-              </p>
+            {success && (
+              <div className="p-3 bg-green-50 border border-green-100 rounded-lg text-green-600 text-sm">
+                {success}
+              </div>
             )}
-          </div>
 
-          {/* Error/Success messages  */}
-          {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{error}</p>
-            </div>
-          )}
-
-          {success && (
-            <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-green-600 text-sm">{success}</p>
-            </div>
-          )}
-
-          {/* Sign in button  */}
-          <button
-            onClick={handleSubmit}
-            disabled={isLoading || !isFormValid()}
-            className="group w-full bg-linear-to-r from-red-950 to-red-900 text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Signing in...
-              </>
-            ) : (
-              <>
-                Sign in{" "}
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </>
-            )}
-          </button>
-        </div>
-
-        {/* Footer  */}
-        <div className="mt-6 pt-4 border-t border-gray-200 text-center">
-          <p className="text-sm text-gray-600">
-            Don't you have an account?{" "}
+            {/* Sign in Button */}
             <button
-              className="text-black font-medium hover:underline"
-              onClick={() => navigate("/signup")}
+              onClick={handleSubmit}
+              disabled={isLoading || !isFormValid()}
+              className="w-full bg-gray-900 hover:bg-gray-800 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center disabled:opacity-90 disabled:cursor-not-allowed shadow-sm mt-2"
             >
-              Sign up
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" /> Logging
+                  in...
+                </>
+              ) : (
+                "Log in"
+              )}
             </button>
-          </p>
+          </div>
+          <div className="text-center mt-6">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <button
+                onClick={() => navigate("/signup")}
+                className="font-semibold text-amber-700 hover:text-red-700 underline-offset-2 hover:underline"
+              >
+                Sign up
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT SIDE */}
+      <div className="hidden bg-white lg:flex w-1/2 h-screen p-10 items-center justify-center overflow-hidden border-l border-gray-200">
+        <div className="w-full h-full rounded-xl overflow-hidden relative border border-gray-200 shadow-lg shadow-gray-100">
+          <img
+            src="/src/assets/heroimg-login.jpg"
+            alt="Invox.ai Dashboard"
+            className="w-full h-full object-cover object-top"
+          />
         </div>
       </div>
     </div>
