@@ -48,19 +48,19 @@ const ReminderModal = ({ isOpen, onClose, invoiceId }) => {
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 text-center">
         <div
-          className="fixed inset-0 bg-black/10 bg-opacity-50 transition-opacity"
+          className="fixed inset-0 bg-black/10 bg-opacity-50 transition-opacity backdrop-blur-[3px]"
           onClick={onClose}
         ></div>
 
-        <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 relative text-left transform transition-all">
+        <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 relative text-left transform transition-all border  border-gray-300">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-slate-900 flex items-center">
-              <Mail className="w-5 h-5 mr-2 text-blue-900" />
+            <h3 className="text-lg text-gray-900 flex items-center">
+              <Mail className="w-5 h-5 mr-2 text-gray-800" />
               AI-Generated Reminder{" "}
             </h3>
             <button
               onClick={onClose}
-              className="text-slate-400 hover:text-slate-600"
+              className="text-gray-400 hover:text-gray-600"
             >
               <X className="w-4 h-4" />
             </button>
@@ -68,7 +68,7 @@ const ReminderModal = ({ isOpen, onClose, invoiceId }) => {
 
           {isLoading ? (
             <div className="flex justify-center items-center h-48">
-              <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+              <Loader2 className="w-8 h-8 animate-spin text-gray-600" />
             </div>
           ) : (
             <div className="space-y-4">

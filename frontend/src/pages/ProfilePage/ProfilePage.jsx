@@ -53,99 +53,101 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center">
-        <Loader2 className="w-8 h-8 animate-spin" />
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin text-gray-600" />
       </div>
     );
   }
 
   return (
-    <div className="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden max-w-5xl mx-auto">
-      <div className="px-6 py-4 border-b border-slate-200 bg-slate-50">
-        <h3 className="text-lg font-semibold text-slate-900">My Profile</h3>
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      <div className="mx-auto ">
+        <div className="mb-4 sm:mb-6">
+          <h1 className="text-xl sm:text-2xl text-gray-900">Profile</h1>
+          <p className="text-sm text-gray-500 mt-1 text-light">
+            Manage your account information and business details
+          </p>
+        </div>
 
-      <form onSubmit={handleUpdateProfile}>
-        <div className="p-6 space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Email Address
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointers-events-none">
-                <Mail className="w-5 h-5 text-slate-400" />
+        <div className="bg-white border border-gray-200 rounded-lg sm:rounded-lg shadow-sm shadow-gray-100 overflow-hidden">
+          <div className="py-4 px-4 sm:py-7 sm:px-8 space-y-6 sm:space-y-8">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <div className="relative">
+                <input
+                  type="email"
+                  readOnly
+                  value={user?.email || ""}
+                  className="w-full h-11 pl-3 pr-4 py-2.5 border border-gray-200 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed text-sm"
+                  disabled
+                />
               </div>
-              <input
-                type="email"
-                readOnly
-                value={user?.email || ""}
-                className="w-full h-10 pl-10 pr-3 py-2 border border-slate-200 rounded-lg bg-slate-50 text-slate-500 disabled:cursor-not-allowed"
-                disabled
-              />
+            </div>
+
+            <InputField
+              label="Full Name"
+              name="name"
+              type="text"
+              value={formData.name}
+              onChange={handleInputChange}
+              placeholder="Enter your full name"
+            />
+
+            <div className="pt-6 sm:pt-7 border-t border-gray-100">
+              <div className="mb-4 sm:mb-6">
+                <h4 className="text-lg sm:text-xl text-gray-900">
+                  Business Information
+                </h4>
+                <p className="text-sm text-gray-500 mt-1.5 text-light">
+                  This will be to prefill the "Bill From" section of your
+                  invoices.
+                </p>
+              </div>
+              <div className="space-y-5 sm:space-y-6">
+                <InputField
+                  label="Business Name"
+                  name="businessName"
+                  type="text"
+                  value={formData.businessName}
+                  onChange={handleInputChange}
+                  placeholder="Your Company LLC"
+                />
+                <TextareaField
+                  label="Address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  placeholder="123 Main St, Anytown, India"
+                />
+                <InputField
+                  label="Phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="(555) 123-4567"
+                />
+              </div>
             </div>
           </div>
 
-          <InputField
-            label="Full Name"
-            name="name"
-            icon={User}
-            type="text"
-            value={formData.name}
-            onChange={handleInputChange}
-            placeholder="Enter your full name"
-          />
-
-          <div className="pt-6 border-t border-slate-200">
-            <h4 className="text-lg font-medium text-slate-900">
-              Business Information
-            </h4>
-            <p className="text-sm text-slate-500 mt-1 mb-4">
-              This will be to prefill the "Bill From" section of your invoices.
-            </p>
-            <div className="space-y-4">
-              <InputField
-                label="Business Name"
-                name="businessName"
-                icon={Building}
-                type="text"
-                value={formData.businessName}
-                onChange={handleInputChange}
-                placeholder="Your Company LLC"
-              />
-              <TextareaField
-                label="Address"
-                name="address"
-                icon={MapPin}
-                value={formData.address}
-                onChange={handleInputChange}
-                placeholder="123 Main St, Anytown, India"
-              />
-              <InputField
-                label="Phone"
-                name="phone"
-                icon={Phone}
-                type="tel"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="(555) 123-4567"
-              />
-            </div>
+          <div className="px-4 sm:px-8 py-4 sm:py-5 bg-gray-50 border-t border-gray-100 flex justify-end">
+            <button
+              type="button"
+              onClick={handleUpdateProfile}
+              disabled={isUpdating}
+              className="inline-flex items-center justify-center px-4 sm:px-5 py-2.5 h-11 bg-gray-900 hover:bg-gray-800 text-white text-sm rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm w-full sm:w-auto"
+            >
+              {isUpdating ? (
+                <Loader2 className="w-[18px] h-[18px] mr-2 animate-spin" />
+              ) : null}
+              {isUpdating ? "Saving..." : "Save Changes"}
+            </button>
           </div>
         </div>
-
-        <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex justify-end">
-          <button
-            type="submit"
-            disabled={isUpdating}
-            className="inline-flex items-center justify-center px-4 py-2 h-10 bg-blue-900 hover:bg-blue-800 text-white font-medium text-sm rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isUpdating ? (
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-            ) : null}
-            {isUpdating ? "Saving..." : "Save Changes"}
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 };

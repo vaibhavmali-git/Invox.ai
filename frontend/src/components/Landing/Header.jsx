@@ -29,7 +29,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <div className="flex items-center space-x-2">
-            <span className="text-xl font-bold text-blue-900">
+            <span className="text-xl font-bold text-red-900">
               InvoAIce
             </span>
           </div>
@@ -60,7 +60,7 @@ const Header = () => {
 
                 <Link
                   to="/signup"
-                  className="bg-linear-to-r from-blue-950 to-blue-900 hover:bg-gray-800 text-white px-6 py-2.5 rounded-lg font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                  className="bg-linear-to-r from-red-950 to-red-900 hover:bg-gray-800 text-white px-6 py-2.5 rounded-lg font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg"
                 >
                   Signup
                 </Link>

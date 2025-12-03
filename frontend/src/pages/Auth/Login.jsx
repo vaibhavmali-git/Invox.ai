@@ -131,7 +131,7 @@ const Login = () => {
       <div className="w-full max-w-sm">
         {/* header  */}
         <div className="text-center mb-8">
-          <div className="w-12 h-12 bg-gradient-to-r from-blue-950 to-blue-900 rounded-xl mx-auto mb-6 flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-r from-red-950 to-red-900 rounded-lg mx-auto mb-6 flex items-center justify-center">
             <FileText className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-2xl font-semibold text-gray-900 mb-2">
@@ -161,7 +161,7 @@ const Login = () => {
                 className={`w-full pl-12 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all
                 ${
                   fieldErrors.email && touched.email
-                    ? "border-red-300 focus:ring-red-500"
+                    ? "border-red-100 focus:ring-red-100"
                     : "border-gray-300 focus:ring-black"
                 }`}
                 placeholder="Enter your email"
@@ -189,7 +189,7 @@ const Login = () => {
                 className={`w-full pl-12 pr-12 py-3 border rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all 
                   ${
                     fieldErrors.password && touched.password
-                      ? "border-red-300 focus:ring-red-500"
+                      ? "border-red-100 focus:ring-red-100"
                       : "border-gray-300 focus:ring-black"
                   }`}
                 placeholder="Enter your password"
@@ -230,7 +230,7 @@ const Login = () => {
           <button
             onClick={handleSubmit}
             disabled={isLoading || !isFormValid()}
-            className="group w-full bg-linear-to-r from-blue-950 to-blue-900 text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+            className="group w-full bg-linear-to-r from-red-950 to-red-900 text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
           >
             {isLoading ? (
               <>

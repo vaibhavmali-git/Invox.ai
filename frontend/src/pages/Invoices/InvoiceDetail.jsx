@@ -64,7 +64,7 @@ const InvoiceDetail = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-96">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-gray-700" />
       </div>
     );
   }
@@ -72,13 +72,13 @@ const InvoiceDetail = () => {
   if (!invoice) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center bg-slate-50 rounded-lg">
-        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+        <div className="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center mb-4">
           <AlertCircle className="w-8 h-8 text-red-600" />
         </div>
-        <h3 className="text-lg font-medium text-slate-900 mb-2">
+        <h3 className="text-lg font-medium text-gray-900 mb-2">
           Invoice Not Found
         </h3>
-        <p className="text-slate-500 mb-6 max-w-md">
+        <p className="text-gray-500 mb-6 max-w-md">
           The invoice you are looking for does not exist or could not be loaded.
         </p>
         <Button onClick={() => navigate("/invoices")}>
@@ -101,9 +101,9 @@ const InvoiceDetail = () => {
       />
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 print:hidden">
-        <h1 className="text-2xl font-semibold text-slate-900 mb-4 sm:mb-0">
+        <h1 className="text-2xl font-semibold text-gray-900 mb-4 sm:mb-0">
           Invoice{" "}
-          <span className="num text-slate-500">
+          <span className="text-gray-500">
             {invoice.invoiceNumber}
           </span>
         </h1>
@@ -138,16 +138,16 @@ const InvoiceDetail = () => {
         >
           <div className="flex flex-col sm:flex-row justify-between items-start pb-8 border-b border-slate-200">
             <div>
-              <h2 className="text-3xl font-bold text-slate-900">INVOICE</h2>
-              <p className="text-sm text-slate-500 mt-2 num">
+              <h2 className="text-3xl font-bold text-gray-900">INVOICE</h2>
+              <p className="text-sm text-gray-500 mt-2 ">
                 # {invoice.invoiceNumber}
               </p>
             </div>
 
             <div className="text-left sm:text-right mt-4 sm:mt-0">
-              <p className="text-sm text-slate-500">Status</p>
+              <p className="text-sm text-gray-500">Status</p>
               <span
-                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-xl text-xs font-medium
                     ${
                       invoice.status === "Paid"
                         ? "bg-emerald-100 text-emerald-800"
@@ -161,73 +161,73 @@ const InvoiceDetail = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 my-8 num">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 my-8 ">
             <div>
-              <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
                 Bill From
               </h3>
-              <p className="font-semibold text-slate-800">
+              <p className="font-semibold text-gray-800">
                 {invoice.billFrom.businessName}
               </p>
-              <p className="text-slate-600">{invoice.billFrom.address}</p>
-              <p className="text-slate-600">{invoice.billFrom.email}</p>
-              <p className="text-slate-600">{invoice.billFrom.phone}</p>
+              <p className="text-gray-600">{invoice.billFrom.address}</p>
+              <p className="text-gray-600">{invoice.billFrom.email}</p>
+              <p className="text-gray-600">{invoice.billFrom.phone}</p>
             </div>
 
             <div className="sm:text-right">
-              <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
                 Bill To
               </h3>
-              <p className="font-semibold text-slate-800">
+              <p className="font-semibold text-gray-800">
                 {invoice.billTo.clientName}
               </p>
-              <p className="text-slate-600">{invoice.billTo.address}</p>
-              <p className="text-slate-600">{invoice.billTo.email}</p>
-              <p className="text-slate-600">{invoice.billTo.phone}</p>
+              <p className="text-gray-600">{invoice.billTo.address}</p>
+              <p className="text-gray-600">{invoice.billTo.email}</p>
+              <p className="text-gray-600">{invoice.billTo.phone}</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 my-8 num">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 my-8 ">
             <div>
-              <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
                 Invoice Date
               </h3>
-              <p className="font-medium text-slate-800">
+              <p className="font-medium text-gray-800">
                 {new Date(invoice.invoiceDate).toLocaleDateString()}
               </p>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
                 Due Date
               </h3>
-              <p className="font-medium text-slate-800">
+              <p className="font-medium text-gray-800">
                 {new Date(invoice.dueDate).toLocaleDateString()}
               </p>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
                 Payment Terms
               </h3>
-              <p className="font-medium text-slate-800">
+              <p className="font-medium text-gray-800">
                 {invoice.paymentTerms}
               </p>
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-lg overflow-hidden num">
+          <div className="bg-white border border-slate-200 rounded-lg overflow-hidden ">
             <table className="w-full divide-y divide-slate-200">
               <thead className="bg-slate-50">
                 <tr>
-                  <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Item
                   </th>
-                  <th className="px-4 sm:px-6 py-3 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="px-4 sm:px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Qty
                   </th>
-                  <th className="px-4 sm:px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="px-4 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Price
                   </th>
-                  <th className="px-4 sm:px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="px-4 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Total
                   </th>
                 </tr>
@@ -235,16 +235,16 @@ const InvoiceDetail = () => {
               <tbody className="bg-white divide-y divide-slate-200">
                 {invoice.items.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-4 sm:px-6 py-4 text-sm font-medium text-slate-900">
+                    <td className="px-4 sm:px-6 py-4 text-sm font-medium text-gray-900">
                       {item.name}
                     </td>
-                    <td className="px-4 sm:px-6 py-4 text-center text-sm font-medium text-slate-600">
+                    <td className="px-4 sm:px-6 py-4 text-center text-sm font-medium text-gray-600">
                       {item.quantity}
                     </td>
-                    <td className="px-4 sm:px-6 py-4 text-right text-sm font-medium text-slate-600">
+                    <td className="px-4 sm:px-6 py-4 text-right text-sm font-medium text-gray-600">
                       ${item.unitPrice.toFixed(2)}
                     </td>
-                    <td className="px-4 sm:px-6 py-4 text-right text-sm font-medium text-slate-900">
+                    <td className="px-4 sm:px-6 py-4 text-right text-sm font-medium text-gray-900">
                       ${item.total.toFixed(2)}
                     </td>
                   </tr>
@@ -253,17 +253,17 @@ const InvoiceDetail = () => {
             </table>
           </div>
 
-          <div className="flex justify-end mt-8 num">
+          <div className="flex justify-end mt-8 ">
             <div className="w-full max-w-sm space-y-3">
-              <div className="flex justify-between text-sm text-slate-600">
+              <div className="flex justify-between text-sm text-gray-600">
                 <span>Subtotal</span>
                 <span>${invoice.subTotal.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-sm text-slate-600">
+              <div className="flex justify-between text-sm text-gray-600">
                 <span>Tax</span>
                 <span>${invoice.taxTotal.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between font-semibold text-lg text-slate-900 border-t border-slate-200 pt-3 mt-3">
+              <div className="flex justify-between font-semibold text-lg text-gray-900 border-t border-slate-200 pt-3 mt-3">
                 <span>Total</span>
                 <span>${invoice.total.toFixed(2)}</span>
               </div>
@@ -272,10 +272,10 @@ const InvoiceDetail = () => {
 
           {invoice.notes && (
             <div className="mt-8 pt-8 border-t border-slate-200">
-              <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
                 Notes
               </h3>
-              <p className="text-sm text-slate-600">{invoice.notes}</p>
+              <p className="text-sm text-gray-600">{invoice.notes}</p>
             </div>
           )}
         </div>

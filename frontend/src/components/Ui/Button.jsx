@@ -9,17 +9,17 @@ const Button = ({
   ...props
 }) => {
   const baseClasses =
-    "inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-800 focus:ring-offset-2 disabled:opacity-50 disable:opacity-cursor-not-allowed";
+    "inline-flex items-center justify-center rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-50 disable:opacity-cursor-not-allowed";
 
   const variantClasses = {
-    primary: "bg-blue-900 hover:bg-blue-800 text-white",
+    primary: "bg-gray-900 hover:bg-gray-800 text-white",
     secondary:
-      "bg-white hover:bg-slate-50 text-slate-700 border border-slate-200",
-    ghost: "bg-transparent hover:bg-slate-100 text-slate-700",
+      "bg-white hover:bg-slate-50 text-gray-700 border border-slate-300",
+    ghost: "bg-transparent hover:bg-slate-100 text-gray-700",
   };
 
   const sizeClasses = {
-    small: "px-3 py-1 h-8 text-sm",
+    small: "px-3 py-1 h-8 text-xs",
     medium: "px-4 py-2 h-10 text-sm",
     large: "px-6 py-3 h-12 text-base",
   };

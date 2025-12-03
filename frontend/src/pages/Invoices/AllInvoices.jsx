@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPath";
 import {
@@ -13,7 +13,7 @@ import {
   Mail,
 } from "lucide-react";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Ui/Button";
 import CreateWithAIModal from "../../components/Invoices/CreateWithAIModal";
 import ReminderModal from "../../components/Invoices/ReminderModal";
@@ -23,12 +23,26 @@ const AllInvoices = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [statusChangeLoading, setStatusChangeLoading] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchTerm = searchParams.get("search") || "";
+
   const [statusFilter, setStatusFilter] = useState("All");
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [isReminderModalOpen, setIsReminderModalOpen] = useState(false);
   const [selectedInvoiceId, setSelectedInvoiceId] = useState(null);
+
   const navigate = useNavigate();
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+
+      const len = searchInputRef.current.value.length;
+      searchInputRef.current.setSelectionRange(len, len);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -67,7 +81,7 @@ const AllInvoices = () => {
     setStatusChangeLoading(invoice._id);
     try {
       const newStatus = invoice.status === "Paid" ? "Unpaid" : "Paid";
-      const updatedInvoice = {...invoice, status:newStatus}
+      const updatedInvoice = { ...invoice, status: newStatus };
       const response = await axiosInstance.put(
         API_PATHS.INVOICE.UPDATE_INVOICE(invoice._id),
         updatedInvoice
@@ -89,6 +103,15 @@ const AllInvoices = () => {
     setIsReminderModalOpen(true);
   };
 
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    if (value) {
+      setSearchParams({ search: value });
+    } else {
+      setSearchParams({});
+    }
+  };
+
   const filteredInvoices = useMemo(() => {
     return invoices
       .filter(
@@ -107,7 +130,7 @@ const AllInvoices = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center w-8 h-8 animate-spin text-blue-600">
+      <div className="flex justify-center items-center w-8 h-8 animate-spin text-red-600">
         <Loader2 className="" />
       </div>
     );
@@ -127,10 +150,8 @@ const AllInvoices = () => {
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">
-            All Invoices
-          </h1>
-          <p className="text-sm text-slate-600 mt-1">
+          <h1 className="text-2xl text-gray-900">All Invoices</h1>
+          <p className="text-sm text-gray-600 mt-1">
             Manage all your invoices in one place.
           </p>
         </div>
@@ -160,24 +181,36 @@ const AllInvoices = () => {
         </div>
       )}
 
-      <div className="bg-white border border-slate-200 rounded-lg shadow-sm">
-        <div className="p-4 sm:p-6 border-b border-slate-200">
+      <div>
+        <div className="py-5 pt-2">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-grow">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="w-5 h-5 text-slate-400" />
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Search className="w-4 h-4 text-gray-500" />
               </div>
               <input
+                ref={searchInputRef}
                 type="text"
                 placeholder="Search by invoice # or client..."
-                className="w-full h-10 pl-10 pr-4 p-2 border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full h-11 pl-10 pr-4 p-4 border border-slate-200 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-100 text-sm"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={handleSearchChange}
               />
             </div>
-            <div className="flex-shrink-0">
+            <div className="relative flex-shrink-0">
               <select
-                className="w-full sm:w-auto h-10 px-3 py-2 border border-slate-200 rounded-lg bg-white text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="
+                  appearance-none 
+                  w-full sm:w-auto h-11 
+                  px-4 pr-8 
+                  border border-gray-200 
+                  rounded-lg 
+                  bg-white 
+                  text-sm text-gray-900 
+                  focus:outline-none 
+                  focus:ring-2 
+                  focus:ring-red-100
+                    "
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
               >
@@ -186,19 +219,31 @@ const AllInvoices = () => {
                 <option value="Pending">Pending</option>
                 <option value="Unpaid">Unpaid</option>
               </select>
+
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                <svg
+                  className="h-4 w-4 text-gray-600"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.086l3.71-3.855a.75.75 0 111.08 1.04l-4.24 4.41a.75.75 0 01-1.08 0l-4.24-4.41a.75.75 0 01.02-1.06z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
 
         {filteredInvoices.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-              <FileText className="w-8 h-8 text-slate-400" />
+            <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-4 border border-gray-200 shadow-sm shadow-gray-100">
+              <FileText className="w-8 h-8 text-gray-800" />
             </div>
-            <h3 className="text-lg font-medium text-slate-900 mb-2 ">
-              No invoices found
-            </h3>
-            <p className="text-slate-500 mb-6 max-w-md">
+            <h3 className="text-lg text-gray-900 mb-2 ">No invoices found</h3>
+            <p className="text-gray-500 mb-6 max-w-md text-sm">
               Your search or filter criteria did not match any invoices. Try
               adjusting your search.
             </p>
@@ -209,26 +254,26 @@ const AllInvoices = () => {
             )}
           </div>
         ) : (
-          <div className="w-[90vw] md:w-auto overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50">
+          <div className="w-[90vw] md:w-auto overflow-x-auto border border-gray-200 rounded-lg my-3">
+            <table className="min-w-full divide-y divide-gray-200 ">
+              <thead className="bg-gray-100">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Invoice #
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Client
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                   Amount
+                  <th className="px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Amount
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Due Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-5 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -239,36 +284,36 @@ const AllInvoices = () => {
                   <tr key={invoice._id} className="hover:bg-slate-50">
                     <td
                       onClick={() => navigate(`/invoices/${invoice._id}`)}
-                      className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 cursor-pointer num"
+                      className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 cursor-pointer "
                     >
                       {invoice.invoiceNumber}
                     </td>
                     <td
                       onClick={() => navigate(`/invoices/${invoice._id}`)}
-                      className="px-6 py-4 whitespace-nowrap text-sm  text-slate-600 cursor-pointer"
+                      className="px-6 py-4 whitespace-nowrap text-sm  text-gray-600 cursor-pointer"
                     >
                       {invoice.billTo.clientName}
                     </td>
                     <td
                       onClick={() => navigate(`/invoices/${invoice._id}`)}
-                      className="px-6 py-4 whitespace-nowrap text-sm  text-slate-600 cursor-pointer num"
+                      className="px-6 py-4 whitespace-nowrap text-sm  text-gray-600 cursor-pointer "
                     >
                       ${invoice.total.toFixed(2)}
                     </td>
                     <td
                       onClick={() => navigate(`/invoices/${invoice._id}`)}
-                      className="px-6 py-4 whitespace-nowrap text-sm  text-slate-600 cursor-pointer num"
+                      className="px-6 py-4 whitespace-nowrap text-sm  text-gray-600 cursor-pointer "
                     >
                       {moment(invoice.dueDate).format("MMM D YYYY")}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-medium ${
                           invoice.status === "Paid"
-                            ? "bg-emerald-100 text-emerald-800"
+                            ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                             : invoice.status === "Pending"
-                            ? "bg-amber-100 text-amber-800"
-                            : "bg-red-100 text-red-800"
+                            ? "bg-amber-100 text-amber-800 border border-amber-200"
+                            : "bg-red-100 text-red-800 border border-red-200"
                         }`}
                       >
                         {invoice.status}
@@ -310,7 +355,7 @@ const AllInvoices = () => {
                             onClick={() => handleOpenReminderModal(invoice._id)}
                             title="Generate Reminder"
                           >
-                            <Mail className="w-4 h-4 text-blue-500" />
+                            <Mail className="w-4 h-4 text-red-500" />
                           </Button>
                         )}
                       </div>

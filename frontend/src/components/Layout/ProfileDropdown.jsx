@@ -13,12 +13,12 @@ const ProfileDropdown = ({
   const navigate = useNavigate();
   return (
     <div className="relative">
-      <button onClick={onToggle} className="flex items-center space-x-3 p-2 rounded-xl hover:bg-gray-50 transition-colors duration-200">
+      <button onClick={onToggle} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200">
         {avatar ? (
-          <img src={avatar} alt="Avatar" className="h-9 w-9 rounded-xl object-cover" />
+          <img src={avatar} alt="Avatar" className="h-9 w-9 rounded-lg object-cover" />
         ) : (
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-900 to-blue-800 flex items-center justify-center">
-            <span className="text-white font-semibold text-md">{companyName.charAt(0).toUpperCase()}</span>
+          <div className="h-9 w-9 rounded-lg bg-white flex items-center justify-center border border-gray-200 shadow-md shadow-gray-100">
+            <span className="text-gray-900 text-md">{companyName.charAt(0).toUpperCase()}</span>
           </div>
         )}
 
@@ -30,7 +30,7 @@ const ProfileDropdown = ({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-100 z-50">
+        <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl shadow-gray-200 z-50 border  border-gray-200">
           <div className="px-4 py-3 border-b border-gray-100">
             <p className="text-sm font-medium text-gray-900">{companyName}</p>
             <p className="text-xs text-gray-500">{email}</p>

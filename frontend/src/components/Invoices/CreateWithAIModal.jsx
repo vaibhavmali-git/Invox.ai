@@ -45,26 +45,26 @@ const CreateWithAIModal = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 text-center">
         <div
-          className="fixed inset-0 bg-black/10 bg-opacity-50 transition-opacity"
+          className="fixed inset-0 bg-black/10 bg-opacity-50 transition-opacity backdrop-blur-[3px]"
           onClick={onClose}
         ></div>
 
-        <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 relative text-left transform transition-all">
+        <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 relative text-left transform transition-all border  border-gray-300">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-slate-900 flex items-center">
-              <Sparkles className="w-5 h-5 text-blue-600 mr-2" /> Create Invoice
+            <h3 className="text-lg text-gray-900 flex items-center">
+              <Sparkles className="w-5 h-5 text-gray-800 mr-2 bg-white" /> Create Invoice
               with AI
             </h3>
             <button
               onClick={onClose}
-              className="text-slate-400 hover:text-slate-900 -mt-2"
+              className="text-gray-400 hover:text-gray-900 -mt-2"
             >
               <X  className="w-4 h-4"/>
             </button>
           </div>
 
           <div className="space-y-4">
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-gray-600 text-light">
               Paste any text that contains invoice details (like client name,
               items, quantities, and prices) and the AI will attempt to create
               an invoice from it.

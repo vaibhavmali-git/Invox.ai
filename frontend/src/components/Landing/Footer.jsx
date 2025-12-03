@@ -5,7 +5,7 @@ const SocialLink = ({ href, children }) => {
   return (
     <a
       href={href}
-      className="w-10 h-10 bg-blue-950 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors duration-200"
+      className="w-10 h-10 bg-red-950 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors duration-200"
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -42,9 +42,9 @@ const Footer = () => {
           <div className="border-t border-gray-800 pt-8 w-full">
             <div className="flex flex-col items-center space-y-2">
               <p className="text-gray-400 text-sm">
-                Developed by <a href="https://vaibhavmali.netlify.app" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">Vaibhav Mali</a>
+                Developed by <a href="https://vaibhavmali.netlify.app" target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 transition-colors">Vaibhav Mali</a>
               </p>
-              <p className="text-gray-400 text-sm num">
+              <p className="text-gray-400 text-sm">
                 &copy; 2025 InvoAIce. All rights reserved.
               </p>
             </div>

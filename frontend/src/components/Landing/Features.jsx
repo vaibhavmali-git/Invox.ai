@@ -12,8 +12,8 @@ const Features = () => {
             </div>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
-                {FEATURES.map((feature, index) => (<div key={index} className='bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100'>
-                    <div className='w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-6'><feature.icon className='w-8 h-8 text-blue-900'/></div>
+                {FEATURES.map((feature, index) => (<div key={index} className='bg-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100'>
+                    <div className='w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-6'><feature.icon className='w-8 h-8 text-red-900'/></div>
                     <h3 className='text-xl font-bold text-gray-900 mb-4'>{feature.title}</h3>
                     <p className='text-gray-600 leading-relaxed'>{feature.description}</p>
                    
