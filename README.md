@@ -18,13 +18,12 @@ InvoAIce is a modern invoicing platform designed to simplify client billing, aut
 | AI Insights Dashboard | AI Text-to-Invoice |
 | :---: | :---: |
 | ![Dashboard](./docs/dashboard.png) | ![AI Modal](./docs/ai-create-modal.png) |
-| *Visualizes your business financial health with AI-powered insights* | *Convert natural language to structured invoice data instantly* |
+| *Financial overview and AI insights* | *Convert natural language into structured invoice data* |
 
-### Complete User Journey
 **Landing Page**
 ![Landing Page](./docs/landing-page.png)
 
-**All Invoices**
+**All Invoices**s
 ![All Invoices](./docs/all-invoices.png)
 
 **Print & PDF Preview**
@@ -138,7 +137,7 @@ VITE_BACKEND_URL=http://localhost:8000
 
 ### Backend (`/backend/.env.example`)
 ```env
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/invox
+MONGO_URI=your_mongodb_connection_string_here
 JWT_SECRET=your_jwt_secret_key_here
 PORT=5000
 GEMINI_API_KEY=your_gemini_api_key_here
@@ -239,11 +238,3 @@ The backend provides a comprehensive REST API for all invoicing operations:
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! If you'd like to contribute to InvoAIce, please feel free to submit a pull request or open an issue for discussion.
-
----
