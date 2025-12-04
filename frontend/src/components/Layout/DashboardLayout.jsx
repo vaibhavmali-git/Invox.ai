@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Briefcase, LogOut, Menu, X, Search } from "lucide-react"; // Imported Search
+import { Briefcase, LogOut, Menu, X, Search } from "lucide-react"; 
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import ProfileDropdown from "./ProfileDropdown";

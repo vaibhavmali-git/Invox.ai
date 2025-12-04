@@ -130,8 +130,9 @@ const AllInvoices = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center w-8 h-8 animate-spin text-red-600">
-        <Loader2 className="" />
+      <div className="flex flex-col justify-center items-center h-[60vh] w-full gap-2">
+        <Loader2 className="w-8 h-8 animate-spin text-slate-800" />
+        <p className="text-sm text-slate-800 font-medium">Loading invoices...</p>
       </div>
     );
   }

@@ -74,7 +74,7 @@ const Login = () => {
           setSuccess("Login Successful");
           login(response.data, token);
           setTimeout(() => {
-            window.location.href = "/dashboard";
+            navigate("/dashboard", { replace: true });
           }, 2000);
         }
       } else {

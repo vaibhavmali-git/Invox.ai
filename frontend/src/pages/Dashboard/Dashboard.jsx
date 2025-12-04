@@ -80,16 +80,11 @@ const Dashboard = () => {
     },
   ];
 
-  const colorClasses = {
-    red: { bg: "bg-red-100", text: "text-red-600" },
-    emerald: { bg: "bg-emerald-100", text: "text-emerald-600" },
-    red: { bg: "bg-red-100", text: "text-red-600" },
-  };
-
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-96">
-        <Loader2 className="w-8 h-8 animate-spin text-red-600" />
+      <div className="flex flex-col justify-center items-center h-[60vh] w-full gap-2">
+        <Loader2 className="w-8 h-8 animate-spin text-slate-800" />
+        <p className="text-sm text-slate-800 font-medium">Loading...</p>
       </div>
     );
   }
@@ -133,7 +128,7 @@ const Dashboard = () => {
       {/* Ai insights card  */}
       <AIInsightsCard />
 
-      {/* Recent invoices  */}
+      {/* Recent invoices */}
       <div className="border border-gray-200 rounded-lg bg-white overflow-hidden">
         <div className="p-5 border-b border-gray-200 flex justify-between items-center">
           <h2 className="text-lg font-semibold text-gray-900">
@@ -148,7 +143,7 @@ const Dashboard = () => {
         </div>
 
         {recentInvoices.length > 0 ? (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto w-[90vw] md:w-full">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-100">
                 <tr>
@@ -204,7 +199,6 @@ const Dashboard = () => {
             </table>
           </div>
         ) : (
-          /* Empty State */
           <div className="flex flex-col items-center justify-center py-12 text-center px-4">
             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-3 border border-gray-200 shadow-sm shadow-gray-100">
               <FileText className="w-6 h-6 text-gray-800" />
